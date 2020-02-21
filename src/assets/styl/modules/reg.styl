@@ -1,0 +1,114 @@
+.modal-reg
+    position relative
+    width 500px
+    marginLeftRight(auto)
+    padding 30px 75px 70px
+    background: #ffffff
+    border-radius: 3px
+    z-index 3
+    transition: all .3s ease
+    &__header
+        position relative
+        marginLeftRight(-20px)
+        text-align: center
+        .image-logo
+            display inline-block
+        .close-icon
+            position absolute
+            height 20px
+            width 20px
+            top 50%
+            right 0
+            transform: translateY(-50%)
+            background-size: contain
+            cursor pointer
+    &__body
+        margin-top 52px
+        .title
+            font-size: 32px
+            font-weight: 500
+            text-align: center
+        .phone
+            width 300px
+            padding 5px 12px
+            margin-top 50px
+            marginLeftRight(auto)
+            transition: all .3s ease
+            input
+                width 100%
+                font-size: 32px
+                border none
+                outline: none
+                background: #ffffff
+                font-weight 500
+            &.selected
+                box-shadow: 0 6px 7px -4px rgba(0,0,0,.2),0 11px 15px 1px rgba(0,0,0,.14),0 4px 20px 3px rgba(0,0,0,.12)
+        .descr
+        .invite-text
+            margin-top 40px
+            text-align: center
+            font-size: 16px
+            color $colorCaption
+        .descr
+            line-height: 19px
+        .invite-text
+            margin-top 34px
+        .social-list
+            display flex
+            max-width: 90px
+            padding 0
+            margin 40px auto 0
+            justify-content: space-between
+            list-style: none
+            &__item
+                .link
+                    &:hover
+                        .link__icon path
+                            fill $colorExtra
+    &__footer
+        margin-top 53px
+        text-align: center
+        .group-accept
+            margin-top 50px
+            margin-left -10px
+            text-align: left
+            .cbx
+                display: flex
+                margin: auto
+                user-select: none
+                cursor: pointer
+                span
+                    display: inline-block
+                    vertical-align: middle
+                &-icon
+                    position: relative
+                    width: 21px
+                    height: 21px
+                    border-radius: 3px
+                    flex 0 0 21px
+                    vertical-align: middle
+                    border: 2px solid $colorCaption
+                    transition: all .2s ease
+                    svg
+                        position: absolute
+                        top: 3px
+                        left: 2px
+                        fill: none
+                        stroke: $colorCaption
+                        stroke-width: 3
+                        stroke-linecap: round
+                        stroke-linejoin: round
+                        stroke-dasharray: 16px
+                        stroke-dashoffset: 16px
+                        transition: all .3s ease
+                        transition-delay: .1s
+                &-text
+                    padding-left: 18px
+                    font-size: 16px
+                    line-height: 19px
+                    color $colorCaption
+                &-input
+                    display none
+                    &:checked + .cbx
+                        .cbx-icon svg
+                            stroke-dashoffset: 0

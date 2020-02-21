@@ -1,16 +1,80 @@
 @import "utils/vars.styl"
 @import "utils/mixins.styl"
-    
-@import "modules/wrapper.styl"
+@import "modules/reg.styl"
+
+*
+    box-sizing: border-box
 
 html
-  line-height: $mainLineHeight
-  font-size: $mainFontSize
-  color: $mainFontColor
-  height: 100%
-  @media screen and (max-width: $desktopWidth)
+    font-size: $mainFontSize
+    font-family: 'Roboto'
+    color: $colorTextMain
+    height: 100%
+body
+        height 100%
+
+.LAYOUT-APP
+    position relative
+    display: flex
+    height 100%
+    overflow: hidden
+    align-items: center
+    box-sizing: border-box !important
+.bgr-layout
+        position absolute
+        top 0
+        left 0 
+        right 0
+        bottom 0
+        background rgba(0,0,0, .5)
+        z-index: 2
+
+
+
+.button
+    display inline-block
+    height 44px
+    width 270px
+    paddingLeftRight(35px)
+    border-radius 10px
+    background-color $colorBorderDark
     font-size: 16px
-  @media screen and (max-width: $tableWidth)
-    font-size: 15px
-  @media screen and (max-width: $phoneWidth)
-    font-size: 14px
+    line-height: 44px
+    color #ffffff
+    cursor not-allowed
+    transition all .2s ease
+    &.active
+        box-shadow 0px 10px 20px rgba(189, 155, 238, 0.38), 0px 6px 8px rgba(0, 0, 0, 0.06)
+        background-color $colorExtra
+        cursor pointer
+    &--start
+        position absolute
+        text-align: center
+        left 50%
+        top 50%
+        transform: translate(-50%, -50%)
+
+/*
+      ___      .__   __.  __  .___  ___.      ___   .___________. __    ______   .__   __.      _______.
+     /   \     |  \ |  | |  | |   \/   |     /   \  |           ||  |  /  __  \  |  \ |  |     /       |
+    /  ^  \    |   \|  | |  | |  \  /  |    /  ^  \ `---|  |----`|  | |  |  |  | |   \|  |    |   (----`
+   /  /_\  \   |  . `  | |  | |  |\/|  |   /  /_\  \    |  |     |  | |  |  |  | |  . `  |     \   \    
+  /  _____  \  |  |\   | |  | |  |  |  |  /  _____  \   |  |     |  | |  `--'  | |  |\   | .----)   |   
+ /__/     \__\ |__| \__| |__| |__|  |__| /__/     \__\  |__|     |__|  \______/  |__| \__| |_______/    
+*/
+
+.right-enter
+.left-leave-to
+    transform: translateX(200%)
+    opacity 0
+
+.right-enter-to
+.left-enter-to
+    transform: translateX(0)
+    opacity 1
+
+
+.left-enter
+.right-leave-to
+    transform: translateX(-200%)
+    opacity 0
