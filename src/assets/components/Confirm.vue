@@ -8,6 +8,7 @@
             .title Регистрация
             .phone.phone--code
                 input(
+                    ref="first"
                     type="text"
                     v-focus
                     v-model="code[0]"
@@ -34,7 +35,7 @@
             p.descr(v-text="textError" :class="{ 'descr--error': !isSuccess, 'descr--success': isSuccess }")
             p.invite-text {{ statusText }}
         .modal-reg__footer
-            p.alternate-text Или вернись к &nbsp;
+            p.alternate-text Вернуться к &nbsp;
                 span.back-to-reg(@click="$emit('handler-select', 'modal-reg')") регистрации.
 </template>
 
@@ -42,15 +43,13 @@
 
 import axios from 'axios'
 
-const API_KEY = 'g0nXohzRLFSwnz3TsKln44YaCuu';
-const EMAIL = 'ivan_kalita90@mail.ru'
-axios.defaults.baseURL = `https://${EMAIL}:${API_KEY}@gate.smsaero.ru/v2/sms`;
+function generateSecret() {
+    return Math.floor(Math.random() * 9000 + 1000)
+}
 
 
 export default {
     data: () => ({
-        valid: false,
-
         statusCode: 0,
         isSuccess: false,
         textError: '',
@@ -62,19 +61,7 @@ export default {
         }
     },
     mounted() {
-        let this_ = this,
-        startRequest = setInterval(() => {
-                axios({
-                    url: '/status',
-                    methods: 'get',
-                    params: {
-                        id: window.ID_CODE
-                    }
-                })
-                .then(response => this_.statusCode = response.data.status);
-
-                if (this_.statusCode === 1) clearInterval(startRequest)
-        }, 1000)
+        this.startCheckStatus()
         console.log(window.SECRET_CODE, window.ID_CODE)
     },
     computed: {
@@ -85,15 +72,45 @@ export default {
         }
     },
     methods: {
+        startCheckStatus() {
+            let startRequest = setInterval(() => {
+                    axios('/test.php', {
+                        params: {
+                            api: 'status',
+                            id: window.ID_CODE
+                        }
+                    })
+                    .then(response => this.statusCode = response.data.data.status);
+
+                    if (this.statusCode === 1) clearInterval(startRequest)
+            }, 1000)
+        },
         validCode() {
             if (Number(this.code.join('')) === window.SECRET_CODE) {
-                this.valid = true;
                 this.isSuccess = true;
                 this.textError = 'Регистрация прошла успешно!';
             }
             else {
-                window.SECRET_CODE = null;
+                window.SECRET_CODE = generateSecret();
+                this.isSuccess = false;
+                this.statusCode = 0;
                 this.textError = 'Введен неверный код. Повторый код будет отправлен через 10 минут.'
+                this.code = this.code.map(val => val = null);
+                this.$refs.first.focus()
+
+                setTimeout(() => {
+                    axios('/test.php', {
+                        params: {
+                            api: 'send',
+                            phone: `${window.PHONE.replace(/[\s+\(\)]/g, '')}`,
+                            secret: window.SECRET_CODE
+                        }
+                    }).then(response => {
+                        console.log(response)
+                        this.startCheckStatus()
+                        window.ID_CODE = response.data.data.id;
+                    })
+                }, 3000) //600000
             }
         }
     }

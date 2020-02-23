@@ -50,11 +50,6 @@
 
 import axios from 'axios'
 
-const API_KEY = 'g0nXohzRLFSwnz3TsKln44YaCuu';
-const EMAIL = 'ivan_kalita90@mail.ru'
-axios.defaults.baseURL = `https://${EMAIL}:${API_KEY}@gate.smsaero.ru/v2/sms`;
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-
 function generateSecret() {
     return Math.floor(Math.random() * 9000 + 1000)
 }
@@ -77,21 +72,20 @@ export default {
     },
     methods: {
         registration() {
-            let this_ = this;
             if (this.valid) {
-                let secretCode = generateSecret()
-                axios({
-                    url: '/send',
-                    methods: 'get',
+                window.SECRET_CODE = generateSecret()
+                axios('/test.php', {
                     params: {
-                        number: `${this.phoneNumber.replace(/[\s+\(\)]/g, '')}`,
-                        sign: 'SMS Aero',
-                        text: secretCode,
-                        channel: 'DIRECT'
+                        api: 'send',
+                        phone: `${this.phoneNumber.replace(/[\s+\(\)]/g, '')}`,
+                        secret: window.SECRET_CODE
                     }
+                }).then(response => {
+                    console.log(response)
+                    window.ID_CODE = response.data.data.id;
+                    this.$emit('handler-select', 'modal-conf')
                 })
-                .then(response => this_.$emit('secret-gen', secretCode, response.data.id))
-                this.$emit('handler-select', 'modal-conf')
+                window.PHONE = this.phoneNumber;
             }
         },
         validPhone() {
