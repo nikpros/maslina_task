@@ -32,9 +32,6 @@ new Vue({
         }
     },
     methods: {
-        cancelReg() {
-            console.log('cancelReg')
-        },
         changeModal(value) {
             this.currentModal = value
         },

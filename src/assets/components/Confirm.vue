@@ -62,7 +62,7 @@ export default {
     },
     mounted() {
         this.startCheckStatus()
-        console.log(window.SECRET_CODE, window.ID_CODE)
+        console.log('Код подтверждения: ', window.SECRET_CODE)
     },
     computed: {
         statusText() {
@@ -106,7 +106,6 @@ export default {
                             secret: window.SECRET_CODE
                         }
                     }).then(response => {
-                        console.log(response)
                         this.startCheckStatus()
                         window.ID_CODE = response.data.data.id;
                     })

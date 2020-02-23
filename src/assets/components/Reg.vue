@@ -81,7 +81,6 @@ export default {
                         secret: window.SECRET_CODE
                     }
                 }).then(response => {
-                    console.log(response)
                     window.ID_CODE = response.data.data.id;
                     this.$emit('handler-select', 'modal-conf')
                 })

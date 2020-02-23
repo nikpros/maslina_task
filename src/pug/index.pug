@@ -12,5 +12,3 @@ html
             .bgr-layout
             transition(:name="directSlide" mode="out-in")
                 component(:is="currentModal" @handler-select="changeModal" @secret-gen="saveSecret" @close="closeModal")
-            //- modal-conf(@reg-off="cancelReg")
-            //- modal-reg(@reg="changeModal")
