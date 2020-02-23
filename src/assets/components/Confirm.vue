@@ -109,7 +109,7 @@ export default {
                         this.startCheckStatus()
                         window.ID_CODE = response.data.data.id;
                     })
-                }, 3000) //600000
+                }, 600000)
             }
         }
     }
